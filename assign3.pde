@@ -6,10 +6,13 @@ final int START_BUTTON_W = 144;
 final int START_BUTTON_H = 60;
 final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
+final int soilSpacing=80;
+int soil0X,soil0Y,soil1X,soil1Y,soil2X,soil2Y,soil3X,soil3Y,soil4X,soil4Y,soil5X,soil5Y;
+
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil8x24;
-
+PImage soil0,soil1,soil2,soil3,soil4,soil5;
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
 float cameraOffsetY = 0;
@@ -26,6 +29,14 @@ void setup() {
 	restartNormal = loadImage("img/restartNormal.png");
 	restartHovered = loadImage("img/restartHovered.png");
 	soil8x24 = loadImage("img/soil8x24.png");
+  soil0=loadImage("img/soil0.png");
+  soil1=loadImage("img/soil1.png");
+  soil2=loadImage("img/soil2.png");
+  soil3=loadImage("img/soil3.png");
+  soil4=loadImage("img/soil4.png");
+  soil5=loadImage("img/soil5.png");
+  
+  
 }
 
 void draw() {
@@ -82,8 +93,32 @@ void draw() {
 		rect(0, 160 - GRASS_HEIGHT, width, GRASS_HEIGHT);
 
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
-		image(soil8x24, 0, 160);
-
+		//image(soil8x24, 0, 160);
+    for(int i=0; i< 9;i++){
+      for(int j=0;j<4.5;j++){
+        soil0X=i*soilSpacing;
+        soil0Y=160+j*soilSpacing;
+        image(soil0,soil0X,soil0Y);
+        soil1X=i*soilSpacing;
+        soil1Y=soil0Y+320+j*soilSpacing;
+        image(soil1,soil1X,soil1Y);
+        soil2X=i*soilSpacing;
+        soil2Y=soil1Y+320+j*soilSpacing;
+        image(soil2,soil2X,soil2Y);
+        soil3X=i*soilSpacing;
+        soil3Y=soil2Y+320+j*soilSpacing;
+        image(soil3,soil3X,soil3Y);
+        soil4X=i*soilSpacing;
+        soil4Y=soil3Y+320+j*soilSpacing;
+        image(soil4,soil4X,soil4Y);
+        soil5X=i*soilSpacing;
+        soil5Y=soil4Y+320+j*soilSpacing;
+        image(soil5,soil5X,soil5Y);
+        }
+        }
+    
+    
+    
 		// Player
 
 		// Health UI
