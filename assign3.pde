@@ -13,6 +13,8 @@ int soil0X,soil0Y,soil1X,soil1Y,soil2X,soil2Y,soil3X,soil3Y,soil4X,soil4Y,soil5X
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil8x24;
 PImage soil0,soil1,soil2,soil3,soil4,soil5;
+PImage stone1,stone2;
+PImage life;
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
 float cameraOffsetY = 0;
@@ -35,7 +37,9 @@ void setup() {
   soil3=loadImage("img/soil3.png");
   soil4=loadImage("img/soil4.png");
   soil5=loadImage("img/soil5.png");
-  
+  stone1=loadImage("img/stone1.png");
+  stone2=loadImage("img/stone2.png");
+  life=loadImage("img/life.png");
   
 }
 
@@ -94,34 +98,58 @@ void draw() {
 
 		// Soil - REPLACE THIS PART WITH YOUR LOOP CODE!
 		//image(soil8x24, 0, 160);
-    for(int i=0; i< 9;i++){
-      for(int j=0;j<4.5;j++){
+    for(int i=0; i< 8;i++){
+      for(int j=0;j<4;j++){
         soil0X=i*soilSpacing;
         soil0Y=160+j*soilSpacing;
         image(soil0,soil0X,soil0Y);
         soil1X=i*soilSpacing;
-        soil1Y=soil0Y+320+j*soilSpacing;
+        soil1Y=160+320+j*soilSpacing;
         image(soil1,soil1X,soil1Y);
         soil2X=i*soilSpacing;
-        soil2Y=soil1Y+320+j*soilSpacing;
+        soil2Y=160+320*2+j*soilSpacing;
         image(soil2,soil2X,soil2Y);
         soil3X=i*soilSpacing;
-        soil3Y=soil2Y+320+j*soilSpacing;
+        soil3Y=160+320*3+j*soilSpacing;
         image(soil3,soil3X,soil3Y);
         soil4X=i*soilSpacing;
-        soil4Y=soil3Y+320+j*soilSpacing;
+        soil4Y=160+320*4+j*soilSpacing;
         image(soil4,soil4X,soil4Y);
         soil5X=i*soilSpacing;
-        soil5Y=soil4Y+320+j*soilSpacing;
+        soil5Y=160+320*5+j*soilSpacing;
         image(soil5,soil5X,soil5Y);
         }
         }
     
+    for (int i=0;i<8;i++){
+      int stoneX =i*soilSpacing;
+      int stoneY =160+i*soilSpacing;
+      image (stone1,stoneX,stoneY);
+    }
+    
+    for (int i=0;i<8;i=i+4){
+      
+      int stoneX =i*soilSpacing;
+      int stoneY =800+i*soilSpacing;
+      image (stone1,stoneX,stoneY);
+      image (stone1,stoneX,stoneY);
+    }
+    
+    for (int i=8;i>0;i--){
+      for (int j=0;j<8;j++){
+      int stoneX =i*soilSpacing;
+      int stoneY =1440+j*soilSpacing;
+      image (stone1,stoneX,stoneY);
+    }
+    }
     
     
 		// Player
 
 		// Health UI
+    image(life,10,10);
+    image(life,80,10);
+    image(life,150,10);
 
 		break;
 
