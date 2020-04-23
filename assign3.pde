@@ -7,14 +7,21 @@ final int START_BUTTON_H = 60;
 final int START_BUTTON_X = 248;
 final int START_BUTTON_Y = 360;
 final int soilSpacing=80;
-int soil0X,soil0Y,soil1X,soil1Y,soil2X,soil2Y,soil3X,soil3Y,soil4X,soil4Y,soil5X,soil5Y;
 
+int soil0X,soil0Y,soil1X,soil1Y,soil2X,soil2Y,soil3X,soil3Y,soil4X,soil4Y,soil5X,soil5Y;
+int groundhogX=320;
+int groundhogY=80;
+int frame=0;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil8x24;
 PImage soil0,soil1,soil2,soil3,soil4,soil5;
 PImage stone1,stone2;
 PImage life;
+PImage groundhogDown,groundhogIdle,groundhogLeft,groundhogRight;
+
+
+
 // For debug function; DO NOT edit or remove this!
 int playerHealth = 0;
 float cameraOffsetY = 0;
@@ -40,6 +47,10 @@ void setup() {
   stone1=loadImage("img/stone1.png");
   stone2=loadImage("img/stone2.png");
   life=loadImage("img/life.png");
+  groundhogDown=loadImage("img/groundhogDown.png");
+  groundhogIdle=loadImage("img/groundhogIdle.png");
+  groundhogLeft=loadImage("img/groundhogLeft.png");
+  groundhogRight=loadImage("img/groundhogRight.png");
   
 }
 
@@ -127,24 +138,61 @@ void draw() {
       image (stone1,stoneX,stoneY);
     }
     
-    for (int i=0;i<8;i=i+4){
-      
-      int stoneX =i*soilSpacing;
-      int stoneY =800+i*soilSpacing;
-      image (stone1,stoneX,stoneY);
-      image (stone1,stoneX,stoneY);
-    }
     
-    for (int i=8;i>0;i--){
-      for (int j=0;j<8;j++){
-      int stoneX =i*soilSpacing;
-      int stoneY =1440+j*soilSpacing;
-      image (stone1,stoneX,stoneY);
-    }
-    }
+    for(int i=0; i<=9; i++){
+        for(int j=10; j<18; j++){
+          if(i%4 == 1 || i%4 ==2){
+            
+            if(j%4 == 1 || j%4 ==2){
+              image(stone1, soilSpacing*i, soilSpacing*j);
+            }else if(j%4 == 0 || j%4 == 3){
+              image(stone1, soilSpacing*i-soilSpacing*2, soilSpacing*j);
+            }
+            
+          }
+        }
+      }
+      
+      
+      for(int i=0; i<=9; i++){
+        for(int j=18; j<26; j++){
+          
+          if(i%3 == 1 || i%3 == 2){
+           
+            if(j%3 == 0){
+             image(stone1, soilSpacing*i, soilSpacing*j);
+            }else if(j%3 == 1){
+             image(stone1, soilSpacing*i-soilSpacing, soilSpacing*j);
+            }else{
+             image(stone1, soilSpacing*i-soilSpacing*2, soilSpacing*j);
+            }
+           
+          }
+          
+          if(i%3 == 2){
+            
+            if(j%3 ==0){
+              image(stone2, soilSpacing*i, soilSpacing*j);
+            }else if(j%3 ==1){
+              image(stone2, soilSpacing*i-soilSpacing, soilSpacing*j);
+            }else{
+              image(stone2,soilSpacing*i-soilSpacing*2, soilSpacing*j);
+            }
+            
+          }
+          
+        }
+      }
+      
+    
+    
+    
+    
+    
     
     
 		// Player
+    image(groundhogIdle,groundhogX,groundhogY);
 
 		// Health UI
     image(life,10,10);
