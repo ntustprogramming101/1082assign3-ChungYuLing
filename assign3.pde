@@ -9,9 +9,10 @@ final int START_BUTTON_Y = 360;
 final int soilSpacing=80;
 
 int soil0X,soil0Y,soil1X,soil1Y,soil2X,soil2Y,soil3X,soil3Y,soil4X,soil4Y,soil5X,soil5Y;
-int groundhogX=320;
-int groundhogY=80;
+float groundhogX=320;
+float groundhogY=80;
 int frame=0;
+float groundhogX2,groundhogY2;
 
 PImage title, gameover, startNormal, startHovered, restartNormal, restartHovered;
 PImage bg, soil8x24;
@@ -20,10 +21,21 @@ PImage stone1,stone2;
 PImage life;
 PImage groundhogDown,groundhogIdle,groundhogLeft,groundhogRight;
 
+int lifeX1=10;
+int lifeX2=80;
+int lifeX3=150;
+int lifeX4=220;
+int lifeX5=290;
+int lifeY=10;
+
+
+boolean downPressed = false;
+boolean leftPressed = false;
+boolean rightPressed = false;
 
 
 // For debug function; DO NOT edit or remove this!
-int playerHealth = 0;
+int playerHealth = 2;
 float cameraOffsetY = 0;
 boolean debugMode = false;
 
@@ -192,12 +204,73 @@ void draw() {
     
     
 		// Player
-    image(groundhogIdle,groundhogX,groundhogY);
+
+    if(downPressed==false&&leftPressed==false&&rightPressed==false){
+      image(groundhogIdle,groundhogX,groundhogY);
+    }
+    if(downPressed){
+        frame++;
+        if(frame>0 && frame<15){
+          groundhogY+=soilSpacing/15.0;        
+          image(groundhogDown,groundhogX,groundhogY);
+      }else{
+        groundhogY=groundhogY2+soilSpacing;
+        downPressed = false;
+      }
+      }
+        
+      if(leftPressed){
+        frame++;
+        if(frame>0 && frame<15){
+          groundhogX-=soilSpacing/15.0;                
+          image(groundhogLeft,groundhogX,groundhogY);
+      }else{
+        groundhogX=groundhogX2-soilSpacing;
+        leftPressed = false;
+      }
+      }
+        
+      if(rightPressed){
+        frame++;
+        if(frame>0 && frame<15){
+          groundhogX+=soilSpacing/15.0;
+          image(groundhogRight,groundhogX,groundhogY);
+      }else{
+        groundhogX=groundhogX2+soilSpacing;
+        rightPressed = false;
+      }
+      }
 
 		// Health UI
-    image(life,10,10);
-    image(life,80,10);
-    image(life,150,10);
+    
+    if(playerHealth==0){
+        gameState = GAME_OVER;
+      }
+      if(playerHealth==1){
+        image(life,lifeX1,lifeY);
+      }
+      if(playerHealth==2){
+        image(life,lifeX1,lifeY);
+        image(life,lifeX2,lifeY);
+      }
+      if(playerHealth==3){
+        image(life,lifeX1,lifeY);
+        image(life,lifeX2,lifeY);
+        image(life,lifeX3,lifeY);
+      }
+      if(playerHealth==4){
+        image(life,lifeX1,lifeY);
+        image(life,lifeX2,lifeY);
+        image(life,lifeX3,lifeY);
+        image(life,lifeX4,lifeY);
+      }
+      if(playerHealth==5){
+        image(life,lifeX1,lifeY);
+        image(life,lifeX2,lifeY);
+        image(life,lifeX3,lifeY);
+        image(life,lifeX4,lifeY);
+        image(life,lifeX5,lifeY);
+      }
 
 		break;
 
@@ -211,7 +284,14 @@ void draw() {
 
 			image(restartHovered, START_BUTTON_X, START_BUTTON_Y);
 			if(mousePressed){
+        downPressed = false;
+        leftPressed = false;
+        rightPressed = false;
 				gameState = GAME_RUN;
+
+        playerHealth=2;
+        groundhogX=soilSpacing*4;
+        groundhogY=soilSpacing;
 				mousePressed = false;
 				// Remember to initialize the game here!
 			}
@@ -230,9 +310,45 @@ void draw() {
     }
 }
 
+float nowTime,lastTime;
+
 void keyPressed(){
 	// Add your moving input code here
-
+    nowTime = millis();  
+  if (key == CODED) { // detect special keys 
+    switch (keyCode) {
+     
+      
+      case DOWN:
+      if(nowTime - lastTime >  250){ 
+        downPressed = true;
+        frame = 0;
+        groundhogY2=groundhogY;            
+        lastTime = nowTime;
+    }
+        break;
+      case LEFT:
+        if(nowTime - lastTime >  250){ 
+        leftPressed = true;
+        frame = 0;
+        groundhogX2=groundhogX;             
+        lastTime = nowTime;
+    }
+        break;
+      case RIGHT:
+        if(nowTime - lastTime >  250){ 
+        rightPressed = true;
+        frame = 0;
+        groundhogX2=groundhogX;
+              
+        lastTime = nowTime;
+    }
+        break;
+      
+       
+    }
+  }
+  
 	// DO NOT REMOVE OR EDIT THE FOLLOWING SWITCH/CASES
     switch(key){
       case 'w':
